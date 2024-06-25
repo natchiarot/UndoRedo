@@ -19,6 +19,7 @@ public class UndoRedoManager<T> {
         }
     }
     private Node currentState;
+
     public T undo(){
         if (currentState == null) {
             System.out.println("No state to undo");
@@ -37,7 +38,24 @@ public class UndoRedoManager<T> {
         return currentState.state;
     }
 
-    //Implement Redo Operation
+    // Implement Redo Operation
+    public T redo() {
+        if (currentState == null) {
+            System.out.println("No state to redo");
+            return null;
+        }
+        // Getting next state
+        Node nextState = currentState.next;
+        if (nextState == null) {
+            System.out.println("Reached the initial State");
+            return null;
+        } else {
+            // Updating current state to the next state
+            currentState = nextState;
+        }
+        return currentState.state;
+    }
+
 
 
     public void performAction (T newState){
@@ -74,7 +92,12 @@ public class UndoRedoManager<T> {
         System.out.println("Current state: " + undoRedoManager.currentState.state);
         undoRedoManager.undo();
         System.out.println("Current state: " + undoRedoManager.currentState.state);
-        undoRedoManager.undo();
+        undoRedoManager.redo();
+        System.out.println("Current state: " + undoRedoManager.currentState.state);
+        undoRedoManager.redo();
+        System.out.println("Current state: " + undoRedoManager.currentState.state);
+        undoRedoManager.redo();
+
         System.out.println("Current state: " + undoRedoManager.currentState.state);
 
 
